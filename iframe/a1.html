@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<iframe src="a2.html" id="myIframe"></iframe>
+
+<script type="text/javascript">
+  var myIframe = document.getElementById('myIframe');
+
+  window.name = 'mainWindow';
+
+  myIframe.onload = function(){
+    console.log('a1: ' + myIframe.contentWindow.name) // iframeWindow
+  }
+</script>
+</body>
+</html>

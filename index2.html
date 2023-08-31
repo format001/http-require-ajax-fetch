@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<script src="utils.js"></script>
+<script type="text/javascript">
+    function dataRequest(){
+        xhr.ajax({
+            url: 'http://fast.huangdeqin.com/api/index',
+            type: 'GET',
+            dataType: 'JSONP',
+            jsonp: 'callback',
+            success: function(data){
+                console.log(data)
+
+            }
+        })
+    }
+
+    dataRequest();
+
+</script>
+</body>
+</html>

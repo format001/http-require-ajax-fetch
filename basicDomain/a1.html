@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    // document.domain -> 返回当前文档的主机名，还可以被设置
+    document.domain = 'jsplusplus.com';
+
+    var iframe = document.createElement('iframe');
+    iframe.src = 'http://test.jsplusplus.com/index.html';
+    iframe.id = 'myIframe';
+    iframe.style.display = 'none';
+    iframe.onload = function() {
+        var $$ = document.getElementById('myIframe').contentWindow.$;
+        $$.post('http://test.jspluplus.com/get_course1.php', {
+            status: 1,
+        }, function(data) {
+            console.log(data);
+        });
+    }
+    document.body.appendChild(iframe);
+
+
+
+    // 封装ajaxDomain
+    // iframe中引用和基础页面相同基础域名的页面，然后利用iframe下的ajax进行请求，
+    // 因为document.domain只能在页面设置
+    var ajaxDomain = (function() {
+        function createIframe(frameId, frameUrl) {
+            var frame = document.create('iframe');
+            frame.src = frameUrl;
+            frame.id = frameId;
+            frame.style.display = 'none';
+
+            return frame;
+        }
+
+        return function(opt) {
+            document.domain = opt.basicDomain;
+            var frame = createIframe(opt.frameId, opt.frameUrl);
+            frame.onload = function()	{
+                var $$ = document.getElementById(opt.frameId).contentWindow;
+                $$.ajax({
+                    url: opt.url,
+                    type: opt.type,
+                    data: opt.data,
+                    success: opt.success,
+                    error: opt.error
+                })
+            }
+            document.body.appendChild(frame);
+        }
+    })();
+
+    ajaxDomain({
+        basicDomain: 'jsplusplus.com',
+        frameUrl: 'http://test.jsplusplus.com/index.html',
+        url: 'http://test.jsplusplus.com/get_courses1.php',
+        type: 'POST',
+        data: {
+            status: 1
+        },
+        success: function(data) {
+            console.log(data);
+        },
+        error: function() {
+            console.log(0);
+        }
+    });
+</script>
+</body>
+</html>

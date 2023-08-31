@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<iframe src="a3.html" id="myIframe"></iframe>
+<script type="text/javascript">
+    window.name = 'iframeWindow';
+
+    var iframe = document.getElementById('myIframe');
+    iframe.onload = function(){
+        // 这个 window 指的是当前的index2
+        console.log('a2: ' + window.parent.name); // mainWindow
+    }
+</script>
+</body>
+</html>

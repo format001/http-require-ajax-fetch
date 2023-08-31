@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <input class="file" type="file">
+    <button class="submit">提交</button>
+</body>
+<script type="text/javascript" src="utils.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/axios/1.3.6/axios.js"></script>
+<script type="text/javascript">
+
+    const OFile = document.getElementsByClassName('file')[0],
+        OSubmit = document.getElementsByClassName('submit')[0];
+
+    OSubmit.addEventListener('click', async function () {
+        const files = OFile.files,
+            formData = new FormData();
+
+        formData.append('file', files[0]);
+
+            const data3 = await axios.post('http://map.huangdeqin.com/server/upload.php', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            })
+                .then(response => {
+                    console.log('上传文件的响应数据：', response.data);
+                })
+                .catch(error => {
+                    console.error('上传文件时发生错误：', error);
+                });
+
+        console.log(data3)
+        console.log(formData.get('file'))
+    }, false)
+
+
+
+    ;(async (data) => {
+        // var res1 = await new Promise((resolve, reject) => {
+        //     xhr.ajax({
+        //         url: 'http://node.huangdeqin.com/data',
+        //         type: 'GET',
+        //         dataType: 'JSON',
+        //         jsonp: 'callback',
+        //         success (data) {
+        //             resolve(data);
+        //         },
+        //         error (err) {
+        //             reject(err);
+        //         }
+        //     });
+        // });
+        // console.log(res1)
+
+        // http://node.huangdeqin.com/data
+        // const data2 = await fetch("http://map.huangdeqin.com/data.php", {
+        const data2 = await fetch("http://node.huangdeqin.com/post_data", {
+            method: 'POST',                 // 请求方法
+            headers: {
+                Accept: 'application/x-www-form-urlencoded'
+                // 可以设置其他请求头
+            },
+            body: JSON.stringify(data)      // 请求体数据
+        })
+            .then((response) => {
+                return  response.json()
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+            });
+
+        console.log(data2)
+
+        const data3 = await axios.post("http://map.huangdeqin.com/data.php")
+            .then((response) => {
+                console.log(response)
+                return  response.data
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+            });
+
+        console.log(data3)
+
+
+    })({
+        begin_time: 1666486800,
+        weekday: 2,
+        course: '编程',
+        teacher: '小野老师'
+    });
+
+
+
+</script>
+</html>

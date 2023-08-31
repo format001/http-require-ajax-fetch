@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="utils.js"></script>
+<script type="text/javascript">
+    var flag = false;
+    var iframe = document.createElement('iframe');
+    var getDatas = function(){
+
+        if(flag){
+            var data = iframe.contentWindow.name;
+            // console.log(JSON.parse(data));
+        } else {
+            flag = true;
+            setTimeout(function(){
+                iframe.contentWindow.location = 'index2.html';
+            }, 500);
+        }
+    }
+    iframe.src = 'http://fast.huangdeqin.com/api/index';
+    // if(iframe.attachEvent) {
+    //     console.log('加载1')
+    //
+    //     iframe.attachEvent('onload', getDatas);
+    // } else {
+    //     console.log('加载2')
+
+        iframe.onload = getDatas;
+    // }
+
+    document.body.appendChild(iframe);
+</script>
+</body>
+<script type="text/javascript" src="utils.js"></script>
+<script type="text/javascript" src="index.js"></script>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
